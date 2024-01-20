@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.example.movies.R
 import com.example.movies.data.MovieDetails
 import com.example.movies.model.apis.ApiInterface
+import com.example.movies.viewmodel.MoviesViewModel
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,15 +20,18 @@ class MovieDetailsActivity : AppCompatActivity() {
     lateinit var score: TextView
     lateinit var description: TextView
     lateinit var image: ImageView
+    private val viewModel = MoviesViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
         initViews()
+        val id:String? = intent.getStringExtra("id")
+        viewModel.getMovieDetails(id)
+        initObserver()
 
-
-        val id: String? = intent.getStringExtra("id")
+        /*//val id: String? = intent.getStringExtra("id")
         val retrofit = id?.let { ApiInterface.create().getMovieDetails(it,"996e60b1") }
         retrofit?.enqueue(object: Callback<MovieDetails> {
             override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
@@ -43,13 +47,22 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             }
 
-        })
+        })*/
 
     }
 
+    private fun initObserver() {
+        viewModel.movieDetails.observe(this){
+            title.text = it.Title
+            releaseDate.text = it.Released
+            score.text = it.imdbRating
+            description.text = it.Plot
+            Picasso.get().load(it.Poster).into(image)
+        }
+    }
 
 
-    fun initViews(){
+    private fun initViews(){
 
         title = findViewById<TextView>(R.id.movie_details_title)
         releaseDate = findViewById<TextView>(R.id.movie_details_releaseDateValue)

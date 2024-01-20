@@ -33,7 +33,7 @@ class MoviesActivity : AppCompatActivity(), CustomAdapter.ItemClickListener {
 
     private fun initObservers() {
         viewModel.
-            movies.observe(this@MoviesActivity){
+            movies.observe(this){
                 moviesAdapter = CustomAdapter(it,this@MoviesActivity)
                 recyclerView.adapter = moviesAdapter
 
