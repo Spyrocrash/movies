@@ -31,24 +31,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel.getMovieDetails(id)
         initObserver()
 
-        /*//val id: String? = intent.getStringExtra("id")
-        val retrofit = id?.let { ApiInterface.create().getMovieDetails(it,"996e60b1") }
-        retrofit?.enqueue(object: Callback<MovieDetails> {
-            override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
-                title.text = response.body()?.Title
-                releaseDate.text = response.body()?.Released
-                score.text = response.body()?.imdbRating
-                description.text = response.body()?.Plot
-                Picasso.get().load(response.body()?.Poster).into(image)
-
-            }
-
-            override fun onFailure(call: Call<MovieDetails>, t: Throwable) {
-
-            }
-
-        })*/
-
     }
 
     private fun initObserver() {
